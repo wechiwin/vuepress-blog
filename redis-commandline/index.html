@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redis命令行操作 | Ray Wei&#39;s Blog</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/assets/css/0.styles.8ad819f8.css" as="style"><link rel="preload" href="/assets/js/app.a56c6d1d.js" as="script"><link rel="preload" href="/assets/js/3.16bfab84.js" as="script"><link rel="preload" href="/assets/js/1.92468ed9.js" as="script"><link rel="preload" href="/assets/js/21.71aede5e.js" as="script"><link rel="prefetch" href="/assets/js/10.4ca6eac3.js"><link rel="prefetch" href="/assets/js/11.f93ac30e.js"><link rel="prefetch" href="/assets/js/12.031a2357.js"><link rel="prefetch" href="/assets/js/13.797d374f.js"><link rel="prefetch" href="/assets/js/14.93bb9280.js"><link rel="prefetch" href="/assets/js/15.179bb753.js"><link rel="prefetch" href="/assets/js/16.6684586f.js"><link rel="prefetch" href="/assets/js/17.7f63cd3d.js"><link rel="prefetch" href="/assets/js/18.9da20c31.js"><link rel="prefetch" href="/assets/js/19.06ffe7e6.js"><link rel="prefetch" href="/assets/js/20.3486b5a0.js"><link rel="prefetch" href="/assets/js/22.f9187d45.js"><link rel="prefetch" href="/assets/js/23.b1df3fee.js"><link rel="prefetch" href="/assets/js/24.2eeb130b.js"><link rel="prefetch" href="/assets/js/25.235c6446.js"><link rel="prefetch" href="/assets/js/26.f23c3b67.js"><link rel="prefetch" href="/assets/js/27.e75a846b.js"><link rel="prefetch" href="/assets/js/28.696de3df.js"><link rel="prefetch" href="/assets/js/29.7f0ae72b.js"><link rel="prefetch" href="/assets/js/30.6da87c61.js"><link rel="prefetch" href="/assets/js/31.236a5e76.js"><link rel="prefetch" href="/assets/js/32.165f73ac.js"><link rel="prefetch" href="/assets/js/33.b24024b7.js"><link rel="prefetch" href="/assets/js/34.da5f8eea.js"><link rel="prefetch" href="/assets/js/35.b86a5309.js"><link rel="prefetch" href="/assets/js/36.1fb19995.js"><link rel="prefetch" href="/assets/js/37.18e766be.js"><link rel="prefetch" href="/assets/js/38.8c09164c.js"><link rel="prefetch" href="/assets/js/39.4feb025b.js"><link rel="prefetch" href="/assets/js/4.e2b25f4c.js"><link rel="prefetch" href="/assets/js/40.ed14fc2a.js"><link rel="prefetch" href="/assets/js/41.b0ca3d75.js"><link rel="prefetch" href="/assets/js/42.8f653507.js"><link rel="prefetch" href="/assets/js/43.57ee717e.js"><link rel="prefetch" href="/assets/js/44.bf1e83bc.js"><link rel="prefetch" href="/assets/js/45.e53ae355.js"><link rel="prefetch" href="/assets/js/46.850a3828.js"><link rel="prefetch" href="/assets/js/47.134d5d46.js"><link rel="prefetch" href="/assets/js/48.b7e535fd.js"><link rel="prefetch" href="/assets/js/49.ad17a172.js"><link rel="prefetch" href="/assets/js/5.582f0acf.js"><link rel="prefetch" href="/assets/js/50.ff9b873d.js"><link rel="prefetch" href="/assets/js/51.580a0f4a.js"><link rel="prefetch" href="/assets/js/52.47906e1b.js"><link rel="prefetch" href="/assets/js/53.fd7cded7.js"><link rel="prefetch" href="/assets/js/54.423ca0a1.js"><link rel="prefetch" href="/assets/js/55.17dfc653.js"><link rel="prefetch" href="/assets/js/56.8184ef3a.js"><link rel="prefetch" href="/assets/js/57.125e7c5f.js"><link rel="prefetch" href="/assets/js/58.bdc19c34.js"><link rel="prefetch" href="/assets/js/59.e0f01c7c.js"><link rel="prefetch" href="/assets/js/6.202ce5ad.js"><link rel="prefetch" href="/assets/js/60.efbea1f4.js"><link rel="prefetch" href="/assets/js/61.dc22c3dc.js"><link rel="prefetch" href="/assets/js/62.6b70ee76.js"><link rel="prefetch" href="/assets/js/63.3b241354.js"><link rel="prefetch" href="/assets/js/64.e8ed1655.js"><link rel="prefetch" href="/assets/js/65.1936264d.js"><link rel="prefetch" href="/assets/js/66.2c6dcb6e.js"><link rel="prefetch" href="/assets/js/67.c76b1045.js"><link rel="prefetch" href="/assets/js/68.8f14d8f4.js"><link rel="prefetch" href="/assets/js/69.9b30b010.js"><link rel="prefetch" href="/assets/js/7.a683f1aa.js"><link rel="prefetch" href="/assets/js/70.e9dce451.js"><link rel="prefetch" href="/assets/js/71.551dc5bb.js"><link rel="prefetch" href="/assets/js/72.89cffa34.js"><link rel="prefetch" href="/assets/js/73.1c34943f.js"><link rel="prefetch" href="/assets/js/74.c45302f4.js"><link rel="prefetch" href="/assets/js/8.a9ae2c8c.js"><link rel="prefetch" href="/assets/js/9.485fe8d3.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.8ad819f8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-130b300a><div data-v-130b300a><div class="password-shadow password-wrapper-out" style="display:none;" data-v-25ba6db2 data-v-130b300a data-v-130b300a><h3 class="title" data-v-25ba6db2 data-v-25ba6db2>Ray Wei's Blog</h3> <p class="description" data-v-25ba6db2 data-v-25ba6db2></p> <label id="box" class="inputBox" data-v-25ba6db2 data-v-25ba6db2><input type="password" value="" data-v-25ba6db2> <span data-v-25ba6db2>Konck! Knock!</span> <button data-v-25ba6db2>OK</button></label> <div class="footer" data-v-25ba6db2 data-v-25ba6db2><span data-v-25ba6db2><i class="iconfont reco-theme" data-v-25ba6db2></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-25ba6db2>vuePress-theme-reco</a></span> <span data-v-25ba6db2><i class="iconfont reco-copyright" data-v-25ba6db2></i> <a data-v-25ba6db2><span data-v-25ba6db2>Ray Wei</span>
+            
+          <span data-v-25ba6db2>2021 - </span>
+          2022
+        </a></span></div></div> <div class="hide" data-v-130b300a><header class="navbar" data-v-130b300a><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ray Wei's Blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Java 自学
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java-1-junior/0.初级.html" class="nav-link"><i class="undefined"></i>
+  初级
+</a></li><li class="dropdown-item"><!----> <a href="/java-2-senior/0.高级.html" class="nav-link"><i class="undefined"></i>
+  高级
+</a></li><li class="dropdown-item"><!----> <a href="/java-3-master/0.大师级.html" class="nav-link"><i class="undefined"></i>
+  大师级
+</a></li><li class="dropdown-item"><!----> <a href="/Git相关命令.html" class="nav-link"><i class="undefined"></i>
+  Git
+</a></li></ul></div></div><div class="nav-item"><a href="/db/DBMS.html" class="nav-link"><i class="undefined"></i>
+  数据库
+</a></div><div class="nav-item"><a href="/ops/0.index.html" class="nav-link"><i class="undefined"></i>
+  运维
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      OS
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/os/macos/macOS使用技巧.html" class="nav-link"><i class="undefined"></i>
+  macOS
+</a></li><li class="dropdown-item"><!----> <a href="/os/windows/使用Git Bash在Windows上安装zsh和oh-my-zsh.html" class="nav-link"><i class="undefined"></i>
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/os/linux/Linux的须知与使用.html" class="nav-link"><i class="undefined"></i>
+  Linux
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      blog
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/macOS使用Vuepress和Github搭建博客2022.html" class="nav-link"><i class="undefined"></i>
+  Vuepress
+</a></li><li class="dropdown-item"><!----> <a href="/blog/macOS使用Hexo和Github搭建博客2021.html" class="nav-link"><i class="undefined"></i>
+  Hexo
+</a></li></ul></div></div><div class="nav-item"><a href="/excerpt/艺术家们.html" class="nav-link"><i class="undefined"></i>
+  书摘
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-130b300a></div> <aside class="sidebar" data-v-130b300a><div class="personal-info-wrapper" data-v-39576ba9 data-v-130b300a><!----> <h3 class="name" data-v-39576ba9>
+    Ray Wei
+  </h3> <div class="num" data-v-39576ba9><div data-v-39576ba9><h3 data-v-39576ba9>59</h3> <h6 data-v-39576ba9>Articles</h6></div> <div data-v-39576ba9><h3 data-v-39576ba9>12</h3> <h6 data-v-39576ba9>Tags</h6></div></div> <ul class="social-links" data-v-39576ba9></ul> <hr data-v-39576ba9></div> <nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Java 自学
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java-1-junior/0.初级.html" class="nav-link"><i class="undefined"></i>
+  初级
+</a></li><li class="dropdown-item"><!----> <a href="/java-2-senior/0.高级.html" class="nav-link"><i class="undefined"></i>
+  高级
+</a></li><li class="dropdown-item"><!----> <a href="/java-3-master/0.大师级.html" class="nav-link"><i class="undefined"></i>
+  大师级
+</a></li><li class="dropdown-item"><!----> <a href="/Git相关命令.html" class="nav-link"><i class="undefined"></i>
+  Git
+</a></li></ul></div></div><div class="nav-item"><a href="/db/DBMS.html" class="nav-link"><i class="undefined"></i>
+  数据库
+</a></div><div class="nav-item"><a href="/ops/0.index.html" class="nav-link"><i class="undefined"></i>
+  运维
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      OS
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/os/macos/macOS使用技巧.html" class="nav-link"><i class="undefined"></i>
+  macOS
+</a></li><li class="dropdown-item"><!----> <a href="/os/windows/使用Git Bash在Windows上安装zsh和oh-my-zsh.html" class="nav-link"><i class="undefined"></i>
+  Windows
+</a></li><li class="dropdown-item"><!----> <a href="/os/linux/Linux的须知与使用.html" class="nav-link"><i class="undefined"></i>
+  Linux
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      blog
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/macOS使用Vuepress和Github搭建博客2022.html" class="nav-link"><i class="undefined"></i>
+  Vuepress
+</a></li><li class="dropdown-item"><!----> <a href="/blog/macOS使用Hexo和Github搭建博客2021.html" class="nav-link"><i class="undefined"></i>
+  Hexo
+</a></li></ul></div></div><div class="nav-item"><a href="/excerpt/艺术家们.html" class="nav-link"><i class="undefined"></i>
+  书摘
+</a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>index</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/dbms/" class="sidebar-link">DBMS</a></li><li><a href="/db-nf/" class="sidebar-link">数据库设计的三大范式</a></li><li><a href="/all-about-mysql/" class="sidebar-link">MySQL</a></li><li><a href="/redis-commandline/" aria-current="page" class="active sidebar-link">Redis命令行操作</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-25ba6db2 data-v-130b300a><h3 class="title" data-v-25ba6db2 data-v-25ba6db2>Redis命令行操作</h3> <!----> <label id="box" class="inputBox" data-v-25ba6db2 data-v-25ba6db2><input type="password" value="" data-v-25ba6db2> <span data-v-25ba6db2>Konck! Knock!</span> <button data-v-25ba6db2>OK</button></label> <div class="footer" data-v-25ba6db2 data-v-25ba6db2><span data-v-25ba6db2><i class="iconfont reco-theme" data-v-25ba6db2></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-25ba6db2>vuePress-theme-reco</a></span> <span data-v-25ba6db2><i class="iconfont reco-copyright" data-v-25ba6db2></i> <a data-v-25ba6db2><span data-v-25ba6db2>Ray Wei</span>
+            
+          <span data-v-25ba6db2>2021 - </span>
+          2022
+        </a></span></div></div> <div data-v-130b300a><main class="page"><section><div class="page-title"><h1 class="title">Redis命令行操作</h1> <div data-v-f875f3fc><i class="iconfont reco-account" data-v-f875f3fc><span data-v-f875f3fc>Ray Wei</span></i> <i class="iconfont reco-date" data-v-f875f3fc><span data-v-f875f3fc>1/16/2022</span></i> <!----> <!----></div></div> <div class="theme-reco-content content__default"><p>中文官网http://www.redis.cn</p> <p>英文官网http://redis.io</p> <p>Redis命令参考文档网址：http://redisdoc.com</p> <p>http://doc.redisfans.com/</p> <h2 id="_1-redis命令的小套路"><a href="#_1-redis命令的小套路" class="header-anchor">#</a> 1. Redis命令的小套路</h2> <ul><li>NX：not exist</li> <li>EX：expire</li> <li>M：multi</li></ul> <h2 id="_2-基本操作"><a href="#_2-基本操作" class="header-anchor">#</a> 2.基本操作</h2> <h3 id="_1切换数据库"><a href="#_1切换数据库" class="header-anchor">#</a> ①切换数据库</h3> <p>Redis默认有16个数据库。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 使用select切换数据库</span>
+<span class="token comment"># 数据库索引从0开始</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token keyword">select</span> <span class="token number">2</span>
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> <span class="token keyword">select</span> <span class="token number">0</span>
+OK
+</code></pre></div><h3 id="_2查看数据库长度"><a href="#_2查看数据库长度" class="header-anchor">#</a> ②查看数据库长度</h3> <p>数据库长度就是这个数据库中存储了多少条数据</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> hello hello
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> happy happy-value
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> good good-value
+OK
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> dbsize
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+</code></pre></div><h3 id="_3清空全库"><a href="#_3清空全库" class="header-anchor">#</a> ③清空全库</h3> <div class="language-html extra-class"><pre class="language-html"><code>127.0.0.1:6379&gt; flushall
+</code></pre></div><h2 id="_3-key操作"><a href="#_3-key操作" class="header-anchor">#</a> 3. KEY操作</h2> <p>在实际操作中对于Key的定义大家注意下面几点：</p> <ul><li>Key不要太长，超过1024字节将消耗过多内存，降低查询效率。尽管Redis支持的Key最大长度为512MB。</li> <li>Key仍然要做到见名知意。</li> <li>在同一个项目中遵循同一个命名规范，习惯上多个单词用“:”分开。例如：“user:token:session:id”</li> <li>Redis命令不区分大小写，Key区分大小写</li></ul> <h3 id="keys-pattern"><a href="#keys-pattern" class="header-anchor">#</a> KEYS PATTERN</h3> <p>把匹配PATTERN的key返回</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># PATTERN中可以使用“*”匹配多个字符，使用“?”匹配单个字符</span>
+
+<span class="token comment"># 返回数据库中所有的key</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> keys *
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;hello&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;happy&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;good&quot;</span>
+
+<span class="token comment"># 返回数据库中以h开头的key</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> keys h*
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;hello&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;happy&quot;</span>
+
+<span class="token comment"># 返回数据库中有字母o的key</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> keys *o*
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;hello&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;good&quot;</span>
+</code></pre></div><h3 id="type-key"><a href="#type-key" class="header-anchor">#</a> TYPE KEY</h3> <p>返回KEY对应的值的类型</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">type</span> hello
+string
+</code></pre></div><h3 id="move-key-db"><a href="#move-key-db" class="header-anchor">#</a> MOVE KEY DB</h3> <p>把一组键值对数据移动到另一个数据库中</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> move good <span class="token number">2</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+</code></pre></div><h3 id="del-key-key"><a href="#del-key-key" class="header-anchor">#</a> DEL KEY [KEY ...]</h3> <p>根据KEY进行删除，至少要指定一个KEY</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> del happy
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+</code></pre></div><h3 id="exists-key-key"><a href="#exists-key-key" class="header-anchor">#</a> EXISTS KEY [KEY ...]</h3> <p>检查指定的KEY是否存在。指定一个KEY时，存在返回1，不存在返回0。可以指定多个，返回存在的KEY的数量。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> exists good
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> exists fruit-list
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+</code></pre></div><h3 id="rename-key-newkey"><a href="#rename-key-newkey" class="header-anchor">#</a> RENAME KEY NEWKEY</h3> <p>重命名一个KEY，NEWKEY不管是否是已经存在的都会执行，如果NEWKEY已经存在则会被覆盖。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> keys *
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;fruit-list&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;bbb&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;aaa&quot;</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token function">rename</span> aaa <span class="token number">333</span>
+OK
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> keys *
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;fruit-list&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;bbb&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;333&quot;</span>
+</code></pre></div><h3 id="renamenx-key-newkey"><a href="#renamenx-key-newkey" class="header-anchor">#</a> RENAMENX KEY NEWKEY</h3> <p>只有在NEWKEY不存在时能够执行成功，否则失败</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> keys *
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;fruit-list&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;bbb&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;aaa:444&quot;</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> renamenx bbb aaa:444
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+</code></pre></div><h3 id="expire-key-seconds"><a href="#expire-key-seconds" class="header-anchor">#</a> EXPIRE KEY SECONDS</h3> <p>给一个KEY设置在SECONDS秒后过期，过期会被Redis移除。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> expire bbb <span class="token number">100</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+</code></pre></div><h3 id="ttl-key"><a href="#ttl-key" class="header-anchor">#</a> TTL KEY</h3> <p>以秒为单位查看KEY还能存在多长时间
+正数：剩余的存活时间（单位：秒）
+-1：永不过期
+-2：不存在的Key</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> ttl bbb
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">96</span>
+</code></pre></div><h3 id="persist-key"><a href="#persist-key" class="header-anchor">#</a> PERSIST KEY</h3> <p>移除过期时间，变成永久key</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> persist bbb
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> ttl bbb
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> -1
+</code></pre></div><h2 id="_4-string操作"><a href="#_4-string操作" class="header-anchor">#</a> 4. string操作</h2> <h3 id="get-key"><a href="#get-key" class="header-anchor">#</a> GET KEY</h3> <p>根据key得到值，只能用于string类型。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get ccc
+<span class="token string">&quot;111&quot;</span>
+</code></pre></div><h3 id="set-key-value-ex-seconds-px-milliseconds-nx-xx"><a href="#set-key-value-ex-seconds-px-milliseconds-nx-xx" class="header-anchor">#</a> SET KEY VALUE [EX SECONDS | PX MILLISECONDS] [NX|XX]</h3> <p>给KEY设置一个string类型的值。</p> <ul><li>EX参数用于设置存活的秒数。</li> <li>PX参数用于设置存活的毫秒数。</li> <li>NX参数表示当前命令中指定的KEY不存在才行。</li> <li>XX参数表示当前命令中指定的KEY存在才行。</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> ccc <span class="token number">222</span> xx
+OK
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> abc <span class="token number">222</span> xx
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get ccc
+<span class="token string">&quot;222&quot;</span>
+</code></pre></div><h3 id="append-key-value"><a href="#append-key-value" class="header-anchor">#</a> APPEND KEY VALUE</h3> <p>把指定的value追加到KEY对应的原来的值后面，返回值是<code>追加后的字符串长度</code></p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get bbb
+<span class="token string">&quot;333&quot;</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> append bbb <span class="token number">123456</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">9</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get bbb
+<span class="token string">&quot;333123456&quot;</span>
+</code></pre></div><h3 id="strlen-key"><a href="#strlen-key" class="header-anchor">#</a> STRLEN KEY</h3> <p>直接返回字符串长度</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> strlen bbb
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">9</span>
+</code></pre></div><h3 id="incr-key"><a href="#incr-key" class="header-anchor">#</a> INCR KEY</h3> <p>自增1（要求：参与运算的数据必须是整数且不能超过整数Integer范围）</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> incr bbb
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">333123457</span>
+</code></pre></div><h3 id="decr-key"><a href="#decr-key" class="header-anchor">#</a> DECR KEY</h3> <p>自减1（要求：参与运算的数据必须是整数且不能超过整数Integer范围）</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> decr bbb
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">333123456</span>
+</code></pre></div><h3 id="incrby-key-increment"><a href="#incrby-key-increment" class="header-anchor">#</a> INCRBY KEY INCREMENT</h3> <p>原值+INCREMENT（要求：参与运算的数据必须是整数且不能超过整数Integer范围）</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> INCRBY bbb <span class="token number">333654321</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">666777777</span>
+</code></pre></div><h3 id="decrby-key-decrement"><a href="#decrby-key-decrement" class="header-anchor">#</a> DECRBY KEY DECREMENT</h3> <p>原值-DECREMENT（要求：参与运算的数据必须是整数且不能超过整数Integer范围）</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> DECRBY bbb <span class="token number">666777776</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+</code></pre></div><h3 id="getrange-key-start-end"><a href="#getrange-key-start-end" class="header-anchor">#</a> GETRANGE KEY START END</h3> <p>从字符串中取指定的一段，索引从0开始。START是开始取值的索引
+，END是结束取值的索引。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> bbb <span class="token number">123456789</span>
+OK
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get bbb
+<span class="token string">&quot;123456789&quot;</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> GETRANGE bbb <span class="token number">3</span> <span class="token number">6</span>
+<span class="token string">&quot;4567&quot;</span>
+</code></pre></div><h3 id="setrange-key-offset-value"><a href="#setrange-key-offset-value" class="header-anchor">#</a> SETRANGE KEY OFFSET VALUE</h3> <p>从offset（从0开始的索引）开始使用VALUE进行替换，包含offset位置。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> SETRANGE bbb <span class="token number">0</span> <span class="token number">9876</span> 
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">9</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get bbb
+<span class="token string">&quot;987656789&quot;</span>
+</code></pre></div><h3 id="setex-key-seconds-value"><a href="#setex-key-seconds-value" class="header-anchor">#</a> SETEX KEY SECONDS VALUE</h3> <p>设置KEY,VALUE时指定存在秒数</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> setex eee <span class="token number">100</span> eee-value
+OK
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> ttl eee
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">96</span>
+</code></pre></div><h3 id="setnx-key-value"><a href="#setnx-key-value" class="header-anchor">#</a> SETNX KEY VALUE</h3> <p>新建字符串类型的键值对，且要求key必须是新建的</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> setnx ggg ggg-value
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> setnx ggg ggg-value2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get ggg
+<span class="token string">&quot;ggg-value&quot;</span>
+</code></pre></div><h3 id="mset-key-value-key-value"><a href="#mset-key-value-key-value" class="header-anchor">#</a> MSET KEY VALUE [KEY VALUE ...]</h3> <p>一次性设置一组多个键值对</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> mset k1 v1 k2 v2 k3 v3
+OK
+</code></pre></div><h3 id="mget-key-key"><a href="#mget-key-key" class="header-anchor">#</a> MGET KEY [KEY ...]</h3> <p>一次性指定多个KEY，返回它们对应的值，没有值的KEY返回值是(nil)</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> mget k1 k2 k3 k4
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+</code></pre></div><h3 id="msetnx-key-value-key-value"><a href="#msetnx-key-value-key-value" class="header-anchor">#</a> MSETNX KEY VALUE [KEY VALUE ...]</h3> <p>一次性新建多个值，key必须是新建</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> MSETNX k3 v33 k4 v44
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> mget k3 k4
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>nil
+</code></pre></div><h3 id="getset-key-value"><a href="#getset-key-value" class="header-anchor">#</a> GETSET KEY VALUE</h3> <p>设置新值，同时能够将旧值返回</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> getset k3 v33
+<span class="token string">&quot;v3&quot;</span>
+
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get k3
+<span class="token string">&quot;v33&quot;</span>
+</code></pre></div><h2 id="_5-list操作"><a href="#_5-list操作" class="header-anchor">#</a> 5.list操作</h2> <p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。它的底层是双向链表，所以它操作时头尾效率高，中间效率低（额外花费查找插入位置的时间）。</p> <p>在Redis中list类型是按照插入顺序排序的字符串链表。和数据结构中的普通链表一样，我们可以在其头部(left)和尾部(right)添加新的元素。在插入时，如果该键并不存在，Redis将为该键创建一个新的链表。与此相反，如果链表中所有的元素均被移除，那么该键也将会被从数据库中删除。List中可以包含的最大元素数量是2^32-1个。</p> <p>list是一个有序可以重复的数据类型。</p> <p><img src="https://gitee.com/rayywei/blog-image/raw/master/redis-list.png" alt=""></p> <h3 id="lpush-key-value-value"><a href="#lpush-key-value-value" class="header-anchor">#</a> LPUSH key value [value ...]</h3> <p>针对key指定的list，从左边放入元素</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lpush fruit-list apple banana cherry
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+</code></pre></div><h3 id="rpush-key-value-value"><a href="#rpush-key-value-value" class="header-anchor">#</a> RPUSH key value [value ...]</h3> <p>针对key指定的list，从右边放入元素</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> rpush fruit-list orange peach
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+</code></pre></div><h3 id="lrange-key-start-stop"><a href="#lrange-key-start-stop" class="header-anchor">#</a> LRANGE key start stop</h3> <p>根据list集合的索引打印元素数据</p> <ul><li>正着数：0,1,2,3,...</li> <li>倒着数：-1,-2,-3,...</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;orange&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;peach&quot;</span>
+</code></pre></div><h3 id="llen-key"><a href="#llen-key" class="header-anchor">#</a> LLEN key</h3> <p>​	返回list集合的长度</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> llen fruit-list
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+</code></pre></div><h3 id="lpop-key"><a href="#lpop-key" class="header-anchor">#</a> LPOP key</h3> <p>​	从左边弹出一个元素。
+​	弹出=返回+删除。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lpop fruit-list
+<span class="token string">&quot;cherry&quot;</span>
+</code></pre></div><h3 id="rpop-key"><a href="#rpop-key" class="header-anchor">#</a> RPOP key</h3> <p>​	从右边弹出一个元素。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> rpop fruit-list
+<span class="token string">&quot;peach&quot;</span>
+</code></pre></div><h3 id="rpoplpush-source-destination"><a href="#rpoplpush-source-destination" class="header-anchor">#</a> RPOPLPUSH source destination</h3> <p>从source中RPOP一个元素，LPUSH到destination中</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;orange&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> rpoplpush fruit-list target-list
+<span class="token string">&quot;orange&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange target-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;orange&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+</code></pre></div><h3 id="lindex-key-index"><a href="#lindex-key-index" class="header-anchor">#</a> LINDEX key index</h3> <p>根据索引从集合中取值</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lindex fruit-list <span class="token number">0</span>
+<span class="token string">&quot;banana&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lindex fruit-list <span class="token number">1</span>
+<span class="token string">&quot;apple&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lindex fruit-list <span class="token number">2</span>
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+</code></pre></div><h3 id="linsert-key-before-after-pivot-value"><a href="#linsert-key-before-after-pivot-value" class="header-anchor">#</a> LINSERT key BEFORE|AFTER pivot value</h3> <p>在pivot指定的值前面或后面插入value，如果pivot值有重复的，那么就从左往右数，以第一个遇到的pivot为基准。BEFORE表示放在pivot前面，AFTER表示放在pivot后面。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> linsert fruit-list before apple @@@
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> linsert fruit-list after apple <span class="token comment">###</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">6</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;###&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+</code></pre></div><h3 id="lpushx-key-value"><a href="#lpushx-key-value" class="header-anchor">#</a> LPUSHX key value</h3> <p>只能针对存在的list执行LPUSH</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lpushx uuu xxx
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lpushx fruit-list new-value
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">7</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;new-value&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;###&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+<span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+</code></pre></div><h3 id="lrem-key-count-value"><a href="#lrem-key-count-value" class="header-anchor">#</a> LREM key count value</h3> <p>根据count指定的数量从key对应的list中删除value
+具体执行时从左往右删除，遇到一个删一个，删完为止</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrem fruit-list <span class="token number">2</span> apple
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;new-value&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;###&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+</code></pre></div><h3 id="lset-key-index-value"><a href="#lset-key-index-value" class="header-anchor">#</a> LSET key index value</h3> <p>把指定索引位置的元素替换为另一个值</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;new-value&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;###&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;cherry&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lset fruit-list <span class="token number">3</span> apple
+OK
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;new-value&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;###&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;apple&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;banana&quot;</span>
+</code></pre></div><h3 id="ltrim-key-start-stop"><a href="#ltrim-key-start-stop" class="header-anchor">#</a> LTRIM key start stop</h3> <p>仅保留指定区间的数据，两边的数据被删除</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ltrim fruit-list <span class="token number">1</span> <span class="token number">2</span>
+OK
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> lrange fruit-list <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;@@@&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;###&quot;</span>
+</code></pre></div><h2 id="_6-set操作"><a href="#_6-set操作" class="header-anchor">#</a> 6. set操作</h2> <h3 id="sadd-key-member-member"><a href="#sadd-key-member-member" class="header-anchor">#</a> SADD key member [member ...]</h3> <p>给key指定的set集合中存入数据，set会自动去重</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sadd animal:set tiger <span class="token function">cat</span> pig <span class="token function">cat</span> tiger dog snake fish bear
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">7</span>
+</code></pre></div><h3 id="smembers-key"><a href="#smembers-key" class="header-anchor">#</a> SMEMBERS key</h3> <p>返回可以指定的set集合中所有的元素</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> smembers animal:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;pig&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;cat&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;tiger&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;dog&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;bear&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;fish&quot;</span>
+<span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;snake&quot;</span>
+</code></pre></div><h3 id="scard-key"><a href="#scard-key" class="header-anchor">#</a> SCARD key</h3> <p>返回set集合中元素的数量</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> scard animal:set
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">7</span>
+</code></pre></div><h3 id="sismember-key-member"><a href="#sismember-key-member" class="header-anchor">#</a> SISMEMBER key member</h3> <p>检查当前指定member是否是set集合中的元素</p> <ul><li>返回1：是</li> <li>返回0：不是</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sismember animal:set <span class="token function">cat</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sismember animal:set cat888
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+</code></pre></div><h3 id="srem-key-member-member"><a href="#srem-key-member-member" class="header-anchor">#</a> SREM key member [member ...]</h3> <p>从set集合中删除元素</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> srem animal:set aa bb cc snake pig
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> smembers animal:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;tiger&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;dog&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;bear&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;fish&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;cat&quot;</span>
+</code></pre></div><h3 id="sinter-key-key"><a href="#sinter-key-key" class="header-anchor">#</a> SINTER key [key ...]</h3> <p>将指定的set集合进行“交集”操作
+集合A：a,b,c
+集合B：b,c,d
+交集：b,c</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sadd a:set <span class="token number">11</span> <span class="token number">22</span> <span class="token number">33</span> <span class="token number">44</span> <span class="token number">55</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sadd b:set <span class="token number">11</span> <span class="token number">33</span> <span class="token number">55</span> <span class="token number">77</span> <span class="token number">99</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sinter a:set b:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;11&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;33&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;55&quot;</span>
+</code></pre></div><h3 id="sinterstore-destination-key-key"><a href="#sinterstore-destination-key-key" class="header-anchor">#</a> SINTERSTORE destination key [key ...]</h3> <p>取交集后存入destination</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SINTERSTORE c:set a:set b:set
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SMEMBERS c:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;11&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;33&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;55&quot;</span>
+</code></pre></div><h3 id="sdiff-key-key"><a href="#sdiff-key-key" class="header-anchor">#</a> SDIFF key [key ...]</h3> <p>将指定的集合执行“差集”操作，结果和运算顺序有关。
+集合A：a,b,c
+集合B：b,c,d
+A对B执行diff：a
+相当于：A-交集部分</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># a-交集</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SDIFF a:set b:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;22&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;44&quot;</span>
+
+<span class="token comment"># b-交集</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SDIFF b:set a:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;77&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;99&quot;</span>
+</code></pre></div><h3 id="sdiffstore-destination-key-key"><a href="#sdiffstore-destination-key-key" class="header-anchor">#</a> SDIFFSTORE destination key [key ...]</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SDIFFSTORE d:set a:set b:set
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SMEMBERS d:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;22&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;44&quot;</span>
+</code></pre></div><h3 id="sunion-key-key"><a href="#sunion-key-key" class="header-anchor">#</a> SUNION key [key ...]</h3> <p>将指定的集合执行“并集”操作
+集合A：a,b,c
+集合B：b,c,d
+并集：a,b,c,d</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SUNION a:set b:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;11&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;22&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;33&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;44&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;55&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;77&quot;</span>
+<span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;99&quot;</span>
+</code></pre></div><h3 id="sunionstore-destination-key-key"><a href="#sunionstore-destination-key-key" class="header-anchor">#</a> SUNIONSTORE destination key [key ...]</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SMEMBERS e:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;11&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;22&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;33&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;44&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;55&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;77&quot;</span>
+<span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;99&quot;</span>
+</code></pre></div><h3 id="smove-source-destination-member"><a href="#smove-source-destination-member" class="header-anchor">#</a> SMOVE source destination member</h3> <p>把member从source移动到destination</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SMOVE animal:set a:set <span class="token function">cat</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SMEMBERS a:set
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;22&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;44&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;55&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;cat&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;33&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;11&quot;</span>
+</code></pre></div><h3 id="sscan-key-cursor-match-pattern-count-count"><a href="#sscan-key-cursor-match-pattern-count-count" class="header-anchor">#</a> SSCAN key cursor [MATCH pattern] [COUNT count]</h3> <p>基于游标的遍历。cursor是游标值，第一次显示第一块内容时，游标取值为0；根据后续返回的新的游标值获取下一块数据。直到游标值变成0，说明数据遍历完成。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SADD testset a b c d e f g h i j k l m n o p q r s t u <span class="token function">v</span> w x y z aa bb cc <span class="token function">dd</span> ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt uu vv ww xx yy zz
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">52</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sscan testset <span class="token number">0</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;36&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span>  <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;yy&quot;</span>
+    <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;s&quot;</span>
+    <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;i&quot;</span>
+    <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;aa&quot;</span>
+    <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;ff&quot;</span>
+    <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;b&quot;</span>
+    <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;bb&quot;</span>
+    <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;h&quot;</span>
+    <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;gg&quot;</span>
+   <span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;f&quot;</span>
+   
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sscan testset <span class="token number">36</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;2&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span>  <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;r&quot;</span>
+    <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;j&quot;</span>
+    <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v&quot;</span>
+    <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;kk&quot;</span>
+    <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;q&quot;</span>
+    <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;t&quot;</span>
+    <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;w&quot;</span>
+    <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;z&quot;</span>
+    <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;dd&quot;</span>
+   <span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;u&quot;</span>
+   <span class="token number">11</span><span class="token punctuation">)</span> <span class="token string">&quot;ll&quot;</span>
+   
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sscan testset <span class="token number">2</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;25&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span>  <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;cc&quot;</span>
+    <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;pp&quot;</span>
+    <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;zz&quot;</span>
+    <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;c&quot;</span>
+    <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;x&quot;</span>
+    <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;tt&quot;</span>
+    <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;l&quot;</span>
+    <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;ii&quot;</span>
+    <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;oo&quot;</span>
+   <span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;ww&quot;</span>
+   
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sscan testset <span class="token number">25</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;29&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span>  <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;qq&quot;</span>
+    <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;mm&quot;</span>
+    <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;a&quot;</span>
+    <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;ee&quot;</span>
+    <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;vv&quot;</span>
+    <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;n&quot;</span>
+    <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;p&quot;</span>
+    <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;nn&quot;</span>
+    <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;g&quot;</span>
+   <span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;k&quot;</span>
+   
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sscan testset <span class="token number">29</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;63&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span>  <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;jj&quot;</span>
+    <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;y&quot;</span>
+    <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;ss&quot;</span>
+    <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;m&quot;</span>
+    <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;d&quot;</span>
+    <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;xx&quot;</span>
+    <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;uu&quot;</span>
+    <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;e&quot;</span>
+    <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;rr&quot;</span>
+   <span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;o&quot;</span>
+   
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> sscan testset <span class="token number">63</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;0&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;hh&quot;</span>
+</code></pre></div><h3 id="srandmember-key-count"><a href="#srandmember-key-count" class="header-anchor">#</a> SRANDMEMBER key [count]</h3> <p>从集合中随机返回count个数量的元素，count不指定就返回1个（数据有可能重复出现）</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SRANDMEMBER testset
+<span class="token string">&quot;y&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> SRANDMEMBER testset <span class="token number">10</span>
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;pp&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;cc&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;d&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;f&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;r&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;ee&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;rr&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;ll&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;t&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;g&quot;</span>
+</code></pre></div><h3 id="spop-key-count"><a href="#spop-key-count" class="header-anchor">#</a> SPOP key [count]</h3> <p>从set集合中随机弹出count个数量的元素，count不指定就弹出1个（保证不会有重复数据出现），因为弹出后就会从set集合中删除</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> spop testset
+<span class="token string">&quot;aa&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> spop testset <span class="token number">10</span>
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;l&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;r&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;rr&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;b&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;zz&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;pp&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;z&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;x&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;v&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;ll&quot;</span>
+</code></pre></div><h2 id="_7-hash操作"><a href="#_7-hash操作" class="header-anchor">#</a> 7.hash操作</h2> <p>本身就是一个键值对集合。可以当做Java中的Map&lt;String,String&gt;对待。每一个hash可以存储2^32-1个键值对。</p> <p><img src="https://gitee.com/rayywei/blog-image/raw/master/hash.png" alt=""></p> <h3 id="hset-key-field-value"><a href="#hset-key-field-value" class="header-anchor">#</a> HSET key field value</h3> <p>插入新数据返回1，修改旧数据返回0。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HSET teacher:hash <span class="token function">id</span> 001
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HSET teacher:hash <span class="token function">id</span> 002
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+</code></pre></div><h3 id="hgetall-key"><a href="#hgetall-key" class="header-anchor">#</a> HGETALL key</h3> <p>返回某个key的所有的key和value</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HSET teacher:hash name kangkang
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HGETALL teacher:hash
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;id&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;002&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;name&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;kangkang&quot;</span>
+</code></pre></div><h3 id="hget-key-field"><a href="#hget-key-field" class="header-anchor">#</a> HGET key field</h3> <p>返回指定的key的value中的某个key的value</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HGET teacher:hash <span class="token function">id</span>
+<span class="token string">&quot;002&quot;</span>
+</code></pre></div><h3 id="hmset-key-field-value-field-value"><a href="#hmset-key-field-value-field-value" class="header-anchor">#</a> HMSET key field value [field value ...]</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HMSET teacher:hash age <span class="token number">30</span> subject math salary <span class="token number">7000</span>
+OK
+</code></pre></div><h3 id="hmget-key-field-field"><a href="#hmget-key-field-field" class="header-anchor">#</a> HMGET key field [field ...]</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HMGET teacher:hash <span class="token function">id</span> name age subject salary
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;002&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;kangkang&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;30&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;math&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;7000&quot;</span>
+</code></pre></div><h3 id="hlen-key"><a href="#hlen-key" class="header-anchor">#</a> HLEN key</h3> <p>返回value的长度</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HLEN teacher:hash
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+</code></pre></div><h3 id="hkeys-key"><a href="#hkeys-key" class="header-anchor">#</a> HKEYS key</h3> <p>返回key的value中的所有的key</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HKEYS teacher:hash
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;id&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;name&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;age&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;subject&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;salary&quot;</span>
+</code></pre></div><h3 id="hvals-key"><a href="#hvals-key" class="header-anchor">#</a> HVALS key</h3> <p>返回key的value中的所有的value</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HVALS teacher:hash
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;002&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;kangkang&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;30&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;math&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;7000&quot;</span>
+</code></pre></div><h3 id="hexists-key-field"><a href="#hexists-key-field" class="header-anchor">#</a> HEXISTS key field</h3> <p>是否存在某个key，返回1表示存在，返回0表示不存在。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HEXISTS teacher:hash name
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HEXISTS teacher:hash birthday
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+</code></pre></div><h3 id="hdel-key-field-field"><a href="#hdel-key-field-field" class="header-anchor">#</a> HDEL key field [field ...]</h3> <p>删除某个key，返回1表示删除成功，返回0表示删除失败</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HDEL teacher:hash subject
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HDEL teacher:hash birthday
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+</code></pre></div><h3 id="hincrby-key-field-increment"><a href="#hincrby-key-field-increment" class="header-anchor">#</a> HINCRBY key field increment</h3> <p>给filed的值增加指定的数量 hash&lt;key, value=(filed&lt;key, value&gt;)&gt;</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HINCRBY teacher:hash salary <span class="token number">1000</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">8000</span>
+</code></pre></div><h3 id="hsetnx-key-field-value"><a href="#hsetnx-key-field-value" class="header-anchor">#</a> HSETNX key field value</h3> <p>要求field是新建的</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HSETNX teacher:hash name amy
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> HGET teacher:hash name
+<span class="token string">&quot;kangkang&quot;</span>
+</code></pre></div><h2 id="_8-zset操作"><a href="#_8-zset操作" class="header-anchor">#</a> 8.zset操作</h2> <p>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。</p> <p>Sorted set.</p> <p>zset&lt;key, member&lt;name, score&gt;</p> <p><img src="https://gitee.com/rayywei/blog-image/raw/master/zset.png" alt=""></p> <h3 id="zadd-key-nx-xx-ch-incr-score-member-score-member"><a href="#zadd-key-nx-xx-ch-incr-score-member-score-member" class="header-anchor">#</a> ZADD key [NX|XX] [CH] [INCR] score member [score member ...]</h3> <p>添加数据</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZADD exam:score <span class="token number">93</span> amy <span class="token number">83</span> tom <span class="token number">73</span> anna <span class="token number">63</span> mary <span class="token number">53</span> tony <span class="token number">43</span> sam
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">6</span>
+</code></pre></div><h3 id="zrange-key-start-stop-withscores"><a href="#zrange-key-start-stop-withscores" class="header-anchor">#</a> ZRANGE key start stop [WITHSCORES]</h3> <p>升序，遍历数据</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZRANGE exam:score <span class="token number">0</span> -1
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;sam&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;tony&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;mary&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;anna&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;tom&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;amy&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZRANGE exam:score <span class="token number">0</span> -1 withscores
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;sam&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;43&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;tony&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;53&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;mary&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;63&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;anna&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;73&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;tom&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;83&quot;</span>
+<span class="token number">11</span><span class="token punctuation">)</span> <span class="token string">&quot;amy&quot;</span>
+<span class="token number">12</span><span class="token punctuation">)</span> <span class="token string">&quot;93&quot;</span>
+</code></pre></div><h3 id="zcard-key"><a href="#zcard-key" class="header-anchor">#</a> ZCARD key</h3> <p>返回长度</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZCARD exam:score
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">6</span>
+</code></pre></div><h3 id="zscore-key-member"><a href="#zscore-key-member" class="header-anchor">#</a> ZSCORE key member</h3> <p>返回某个member的score</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZSCORE exam:score sam
+<span class="token string">&quot;43&quot;</span>
+</code></pre></div><h3 id="zincrby-key-increment-member"><a href="#zincrby-key-increment-member" class="header-anchor">#</a> ZINCRBY key increment member</h3> <p>给某个member的score增加指定的分数</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZINCRBY exam:score <span class="token number">5</span> sam
+<span class="token string">&quot;48&quot;</span>
+</code></pre></div><h3 id="zrangebyscore-key-min-max-withscores-limit-offset-count"><a href="#zrangebyscore-key-min-max-withscores-limit-offset-count" class="header-anchor">#</a> ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</h3> <p>​	在分数的指定区间内返回数据
+​	min参数可以通过 -inf 表示负无穷
+​	max参数可以通过 +inf 表示正无穷</p> <p>默认是闭区间
+可以通过 (min (max 形式指定开区间，例如：(50 (80</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZRANGEBYSCORE exam:score -inf +inf WITHSCORES
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;sam&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;43&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;tony&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;53&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;mary&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;63&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;anna&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;73&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;tom&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;83&quot;</span>
+<span class="token number">11</span><span class="token punctuation">)</span> <span class="token string">&quot;amy&quot;</span>
+<span class="token number">12</span><span class="token punctuation">)</span> <span class="token string">&quot;93&quot;</span>
+</code></pre></div><h3 id="zrank-key-member"><a href="#zrank-key-member" class="header-anchor">#</a> ZRANK key member</h3> <p>先对分数进行升序排序，返回member的排名。排名从0开始</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 升序</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZRANGE exam:score <span class="token number">0</span> -1 withscores
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;sam&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;48&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;tony&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;53&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;mary&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;63&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;anna&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;73&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;tom&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;83&quot;</span>
+<span class="token number">11</span><span class="token punctuation">)</span> <span class="token string">&quot;amy&quot;</span>
+<span class="token number">12</span><span class="token punctuation">)</span> <span class="token string">&quot;93&quot;</span>
+
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZRANK exam:score sam
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+
+</code></pre></div><h3 id="zrem-key-member-member"><a href="#zrem-key-member-member" class="header-anchor">#</a> ZREM key member [member ...]</h3> <p>delete member(s)</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZREM exam:score amy
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZRANGE exam:score <span class="token number">0</span> -1 withscores
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;sam&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;48&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;tony&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;53&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;mary&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;63&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;anna&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;73&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;tom&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;83&quot;</span>
+</code></pre></div><h3 id="zrange-key-start-stop-withscores-2"><a href="#zrange-key-start-stop-withscores-2" class="header-anchor">#</a> ZRANGE key start stop [WITHSCORES]</h3> <p>降序排序，返回所有的members</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZREVRANGE exam:score <span class="token number">0</span> -1 WITHSCORES
+ <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;tom&quot;</span>
+ <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;83&quot;</span>
+ <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;anna&quot;</span>
+ <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;73&quot;</span>
+ <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;mary&quot;</span>
+ <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;63&quot;</span>
+ <span class="token number">7</span><span class="token punctuation">)</span> <span class="token string">&quot;tony&quot;</span>
+ <span class="token number">8</span><span class="token punctuation">)</span> <span class="token string">&quot;53&quot;</span>
+ <span class="token number">9</span><span class="token punctuation">)</span> <span class="token string">&quot;sam&quot;</span>
+<span class="token number">10</span><span class="token punctuation">)</span> <span class="token string">&quot;48&quot;</span>
+</code></pre></div><h3 id="zrevrank-key-member"><a href="#zrevrank-key-member" class="header-anchor">#</a> ZREVRANK key member</h3> <p>先对分数进行降序排序，返回member的排名。排名从0开始</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:6379<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> ZREVRANK exam:score sam
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">4</span>
+</code></pre></div><h2 id="_9-geospatial"><a href="#_9-geospatial" class="header-anchor">#</a> 9. Geospatial</h2> <p>查询经纬度数据：http://www.jsons.cn/lngcode</p> <h3 id="_1添加地理位置"><a href="#_1添加地理位置" class="header-anchor">#</a> ①添加地理位置</h3> <div class="language- extra-class"><pre class="language-text"><code>GEOADD key longitude latitude member [longitude latitude member ...]
+</code></pre></div><blockquote><p>规则：</p> <p>1.两极无法直接添加，一般会下载城市数据，直接通过 Java 程序一次性导入。</p> <p>2.取值范围</p> <p>​	有效的经度从 -180 度到 180 度。</p> <p>​	有效的纬度从 -85.05112878 度到 85.05112878 度。</p> <p>​	当坐标位置超出指定范围时，该命令将会返回一个错误。</p> <p>3.已经添加的数据，是无法再次往里面添加的。</p></blockquote> <div class="language-html extra-class"><pre class="language-html"><code>192.168.109.100:6379&gt; GEOADD &quot;china:city&quot; 114.085947 22.547 shenzhen
+(integer) 1
+192.168.109.100:6379&gt; GEOADD &quot;china:city&quot; 113.280637 23.125178 guangzhou
+(integer) 1
+</code></pre></div><h3 id="_2查询已添加的地理位置"><a href="#_2查询已添加的地理位置" class="header-anchor">#</a> ②查询已添加的地理位置</h3> <p>Geo类型在Redis内部其实是使用zset类型存储的，所以可以使用zset的命令进行常规操作。</p> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; ZRANGE china:city 0 -1 
+1) &quot;shenzhen&quot;
+2) &quot;guangzhou&quot;
+192.168.109.100:6379&gt; ZRANGE china:city 0 -1 WITHSCORES
+1) &quot;shenzhen&quot;
+2) &quot;4046433733682118&quot;
+3) &quot;guangzhou&quot;
+4) &quot;4046533764066819&quot;
+</code></pre></div><h3 id="_3删除已添加的地理位置"><a href="#_3删除已添加的地理位置" class="header-anchor">#</a> ③删除已添加的地理位置</h3> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; ZREM china:city guangzhou
+(integer) 1
+</code></pre></div><h3 id="_4获取指定地区的坐标值"><a href="#_4获取指定地区的坐标值" class="header-anchor">#</a> ④获取指定地区的坐标值</h3> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; GEOPOS china:city shenzhen
+1) 1) &quot;114.08594459295272827&quot;
+   2) &quot;22.54699993773966327&quot;
+</code></pre></div><h3 id="_5计算两地之间的直线距离"><a href="#_5计算两地之间的直线距离" class="header-anchor">#</a> ⑤计算两地之间的直线距离</h3> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; GEODIST china:city guangzhou shenzhen km
+&quot;104.6426&quot;
+</code></pre></div><blockquote><p>单位：</p> <p>m 表示单位为米[默认值]。</p> <p>km 表示单位为千米。</p> <p>mi 表示单位为英里。</p> <p>ft 表示单位为英尺。</p> <p>如果用户没有显式地指定单位参数， 那么 GEODIST 默认使用米作为单位。</p></blockquote> <h3 id="_6以给定坐标为中心-在指定半径内查找元素"><a href="#_6以给定坐标为中心-在指定半径内查找元素" class="header-anchor">#</a> ⑥以给定坐标为中心，在指定半径内查找元素</h3> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; GEORADIUS china:city 110 20 1000 km WITHCOORD WITHDIST
+1) 1) &quot;shenzhen&quot;
+   2) &quot;509.4622&quot;
+   3) 1) &quot;114.08594459295272827&quot;
+      2) &quot;22.54699993773966327&quot;
+2) 1) &quot;guangzhou&quot;
+   2) &quot;485.7406&quot;
+   3) 1) &quot;113.28063815832138062&quot;
+      2) &quot;23.12517743834835215&quot;
+</code></pre></div><p>WITHCOORD表示显示经纬度<br></p> <p>WITHDIST表示显示到中心的距离</p> <h3 id="_7在指定元素周围查找其他元素"><a href="#_7在指定元素周围查找其他元素" class="header-anchor">#</a> ⑦在指定元素周围查找其他元素</h3> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; GEORADIUSBYMEMBER china:city shenzhen 300 km WITHCOORD WITHDIST
+1) 1) &quot;shenzhen&quot;
+   2) &quot;0.0000&quot;
+   3) 1) &quot;114.08594459295272827&quot;
+      2) &quot;22.54699993773966327&quot;
+2) 1) &quot;guangzhou&quot;
+   2) &quot;104.6426&quot;
+   3) 1) &quot;113.28063815832138062&quot;
+      2) &quot;23.12517743834835215&quot;
+</code></pre></div><h2 id="_10-hyperloglogs"><a href="#_10-hyperloglogs" class="header-anchor">#</a> 10. hyperloglogs</h2> <h3 id="_1基数概念"><a href="#_1基数概念" class="header-anchor">#</a> ①基数概念</h3> <p>一个集合中不重复元素的个数。例如：集合{1,2,5,1,7,2,5}中元素个数是7，但是基数是4。而hyperloglogs的主要功能就是进行基数统计。</p> <h3 id="_2hyperloglogs命令"><a href="#_2hyperloglogs命令" class="header-anchor">#</a> ②hyperloglogs命令</h3> <h4 id="_1-添加"><a href="#_1-添加" class="header-anchor">#</a> [1]添加</h4> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; PFADD user:access:1 tom jerry andy jim andy jerry tom
+(integer) 1
+192.168.109.100:6379&gt; PFADD user:access:2 andy jerry tom bob kate
+(integer) 1
+192.168.109.100:6379&gt; PFADD user:access:3 mary harry tom jerry
+(integer) 1
+</code></pre></div><h4 id="_2-统计"><a href="#_2-统计" class="header-anchor">#</a> [2]统计</h4> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; PFCOUNT user:access:1 user:access:2 user:access:3
+(integer) 8
+</code></pre></div><h4 id="_3-合并"><a href="#_3-合并" class="header-anchor">#</a> [3]合并</h4> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379&gt; PFMERGE user:access:merge user:access:1 user:access:2 user:access:3
+OK
+192.168.109.100:6379&gt; PFCOUNT user:access:merge
+(integer) 8
+</code></pre></div><h2 id="_11-bitmap位图"><a href="#_11-bitmap位图" class="header-anchor">#</a> 11.bitmap位图</h2> <p>直接对数据的二进制位进行操作</p> <div class="language- extra-class"><pre class="language-text"><code>192.168.109.100:6379[5]&gt; set a hello
+OK
+192.168.109.100:6379[5]&gt; GETBIT a 0
+(integer) 0
+192.168.109.100:6379[5]&gt; GETBIT a 1
+(integer) 1
+192.168.109.100:6379[5]&gt; GETBIT a 2
+(integer) 1
+192.168.109.100:6379[5]&gt; GETBIT a 3
+(integer) 0
+192.168.109.100:6379[5]&gt; GETBIT a 4
+(integer) 1
+192.168.109.100:6379[5]&gt; GETBIT a 5
+(integer) 0
+192.168.109.100:6379[5]&gt; SETBIT a 5 1
+(integer) 0
+192.168.109.100:6379[5]&gt; get a
+&quot;lello&quot;
+192.168.109.100:6379[5]&gt; BITCOUNT a
+(integer) 22
+</code></pre></div><p>setbit设置指定比特位<br>
+getbit获取指定比特位<br>
+bitcount统计所有比特位中1的数量</p> <h2 id="常用数据类型应用场景"><a href="#常用数据类型应用场景" class="header-anchor">#</a> 常用数据类型应用场景</h2> <table><thead><tr><th>数据类型</th> <th>应用场景</th></tr></thead> <tbody><tr><td>string</td> <td>分布式Session存储<br>分布式数据库ID<br>计数器：统计网站访问量</td></tr> <tr><td>hash</td> <td>存储对象信息（购物车中的商品信息）<br>存储表的信息</td></tr> <tr><td>list</td> <td>实现队列、栈操作<br>汇总日志<br>粉丝列表<br>关注的人列表</td></tr> <tr><td>set</td> <td>签到<br>打卡<br>点赞</td></tr> <tr><td>zset</td> <td>排行榜<br>百度热点搜索</td></tr> <tr><td>geospatial</td> <td>获取地理位置信息<br>两地之间的距离</td></tr> <tr><td>hyperloglogs</td> <td>基数统计</td></tr> <tr><td>bitmaps</td> <td>统计用户访问次数</td></tr></tbody></table></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/all-about-mysql/" class="prev">
+            MySQL
+          </a></span> <!----></p></div> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-cb1513f6><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_1-redis命令的小套路" class="sidebar-link reco-side-_1-redis命令的小套路" data-v-cb1513f6>1. Redis命令的小套路</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_2-基本操作" class="sidebar-link reco-side-_2-基本操作" data-v-cb1513f6>2.基本操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_1切换数据库" class="sidebar-link reco-side-_1切换数据库" data-v-cb1513f6>①切换数据库</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_2查看数据库长度" class="sidebar-link reco-side-_2查看数据库长度" data-v-cb1513f6>②查看数据库长度</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_3清空全库" class="sidebar-link reco-side-_3清空全库" data-v-cb1513f6>③清空全库</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_3-key操作" class="sidebar-link reco-side-_3-key操作" data-v-cb1513f6>3. KEY操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#keys-pattern" class="sidebar-link reco-side-keys-pattern" data-v-cb1513f6>KEYS PATTERN</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#type-key" class="sidebar-link reco-side-type-key" data-v-cb1513f6>TYPE KEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#move-key-db" class="sidebar-link reco-side-move-key-db" data-v-cb1513f6>MOVE KEY DB</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#del-key-key" class="sidebar-link reco-side-del-key-key" data-v-cb1513f6>DEL KEY [KEY ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#exists-key-key" class="sidebar-link reco-side-exists-key-key" data-v-cb1513f6>EXISTS KEY [KEY ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#rename-key-newkey" class="sidebar-link reco-side-rename-key-newkey" data-v-cb1513f6>RENAME KEY NEWKEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#renamenx-key-newkey" class="sidebar-link reco-side-renamenx-key-newkey" data-v-cb1513f6>RENAMENX KEY NEWKEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#expire-key-seconds" class="sidebar-link reco-side-expire-key-seconds" data-v-cb1513f6>EXPIRE KEY SECONDS</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#ttl-key" class="sidebar-link reco-side-ttl-key" data-v-cb1513f6>TTL KEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#persist-key" class="sidebar-link reco-side-persist-key" data-v-cb1513f6>PERSIST KEY</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_4-string操作" class="sidebar-link reco-side-_4-string操作" data-v-cb1513f6>4. string操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#get-key" class="sidebar-link reco-side-get-key" data-v-cb1513f6>GET KEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#set-key-value-ex-seconds-px-milliseconds-nx-xx" class="sidebar-link reco-side-set-key-value-ex-seconds-px-milliseconds-nx-xx" data-v-cb1513f6>SET KEY VALUE [EX SECONDS | PX MILLISECONDS] [NX|XX]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#append-key-value" class="sidebar-link reco-side-append-key-value" data-v-cb1513f6>APPEND KEY VALUE</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#strlen-key" class="sidebar-link reco-side-strlen-key" data-v-cb1513f6>STRLEN KEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#incr-key" class="sidebar-link reco-side-incr-key" data-v-cb1513f6>INCR KEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#decr-key" class="sidebar-link reco-side-decr-key" data-v-cb1513f6>DECR KEY</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#incrby-key-increment" class="sidebar-link reco-side-incrby-key-increment" data-v-cb1513f6>INCRBY KEY INCREMENT</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#decrby-key-decrement" class="sidebar-link reco-side-decrby-key-decrement" data-v-cb1513f6>DECRBY KEY DECREMENT</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#getrange-key-start-end" class="sidebar-link reco-side-getrange-key-start-end" data-v-cb1513f6>GETRANGE KEY START END</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#setrange-key-offset-value" class="sidebar-link reco-side-setrange-key-offset-value" data-v-cb1513f6>SETRANGE KEY OFFSET VALUE</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#setex-key-seconds-value" class="sidebar-link reco-side-setex-key-seconds-value" data-v-cb1513f6>SETEX KEY SECONDS VALUE</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#setnx-key-value" class="sidebar-link reco-side-setnx-key-value" data-v-cb1513f6>SETNX KEY VALUE</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#mset-key-value-key-value" class="sidebar-link reco-side-mset-key-value-key-value" data-v-cb1513f6>MSET KEY VALUE [KEY VALUE ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#mget-key-key" class="sidebar-link reco-side-mget-key-key" data-v-cb1513f6>MGET KEY [KEY ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#msetnx-key-value-key-value" class="sidebar-link reco-side-msetnx-key-value-key-value" data-v-cb1513f6>MSETNX KEY VALUE [KEY VALUE ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#getset-key-value" class="sidebar-link reco-side-getset-key-value" data-v-cb1513f6>GETSET KEY VALUE</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_5-list操作" class="sidebar-link reco-side-_5-list操作" data-v-cb1513f6>5.list操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lpush-key-value-value" class="sidebar-link reco-side-lpush-key-value-value" data-v-cb1513f6>LPUSH key value [value ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#rpush-key-value-value" class="sidebar-link reco-side-rpush-key-value-value" data-v-cb1513f6>RPUSH key value [value ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lrange-key-start-stop" class="sidebar-link reco-side-lrange-key-start-stop" data-v-cb1513f6>LRANGE key start stop</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#llen-key" class="sidebar-link reco-side-llen-key" data-v-cb1513f6>LLEN key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lpop-key" class="sidebar-link reco-side-lpop-key" data-v-cb1513f6>LPOP key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#rpop-key" class="sidebar-link reco-side-rpop-key" data-v-cb1513f6>RPOP key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#rpoplpush-source-destination" class="sidebar-link reco-side-rpoplpush-source-destination" data-v-cb1513f6>RPOPLPUSH source destination</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lindex-key-index" class="sidebar-link reco-side-lindex-key-index" data-v-cb1513f6>LINDEX key index</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#linsert-key-before-after-pivot-value" class="sidebar-link reco-side-linsert-key-before-after-pivot-value" data-v-cb1513f6>LINSERT key BEFORE|AFTER pivot value</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lpushx-key-value" class="sidebar-link reco-side-lpushx-key-value" data-v-cb1513f6>LPUSHX key value</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lrem-key-count-value" class="sidebar-link reco-side-lrem-key-count-value" data-v-cb1513f6>LREM key count value</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#lset-key-index-value" class="sidebar-link reco-side-lset-key-index-value" data-v-cb1513f6>LSET key index value</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#ltrim-key-start-stop" class="sidebar-link reco-side-ltrim-key-start-stop" data-v-cb1513f6>LTRIM key start stop</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_6-set操作" class="sidebar-link reco-side-_6-set操作" data-v-cb1513f6>6. set操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sadd-key-member-member" class="sidebar-link reco-side-sadd-key-member-member" data-v-cb1513f6>SADD key member [member ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#smembers-key" class="sidebar-link reco-side-smembers-key" data-v-cb1513f6>SMEMBERS key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#scard-key" class="sidebar-link reco-side-scard-key" data-v-cb1513f6>SCARD key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sismember-key-member" class="sidebar-link reco-side-sismember-key-member" data-v-cb1513f6>SISMEMBER key member</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#srem-key-member-member" class="sidebar-link reco-side-srem-key-member-member" data-v-cb1513f6>SREM key member [member ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sinter-key-key" class="sidebar-link reco-side-sinter-key-key" data-v-cb1513f6>SINTER key [key ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sinterstore-destination-key-key" class="sidebar-link reco-side-sinterstore-destination-key-key" data-v-cb1513f6>SINTERSTORE destination key [key ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sdiff-key-key" class="sidebar-link reco-side-sdiff-key-key" data-v-cb1513f6>SDIFF key [key ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sdiffstore-destination-key-key" class="sidebar-link reco-side-sdiffstore-destination-key-key" data-v-cb1513f6>SDIFFSTORE destination key [key ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sunion-key-key" class="sidebar-link reco-side-sunion-key-key" data-v-cb1513f6>SUNION key [key ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sunionstore-destination-key-key" class="sidebar-link reco-side-sunionstore-destination-key-key" data-v-cb1513f6>SUNIONSTORE destination key [key ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#smove-source-destination-member" class="sidebar-link reco-side-smove-source-destination-member" data-v-cb1513f6>SMOVE source destination member</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#sscan-key-cursor-match-pattern-count-count" class="sidebar-link reco-side-sscan-key-cursor-match-pattern-count-count" data-v-cb1513f6>SSCAN key cursor [MATCH pattern] [COUNT count]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#srandmember-key-count" class="sidebar-link reco-side-srandmember-key-count" data-v-cb1513f6>SRANDMEMBER key [count]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#spop-key-count" class="sidebar-link reco-side-spop-key-count" data-v-cb1513f6>SPOP key [count]</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_7-hash操作" class="sidebar-link reco-side-_7-hash操作" data-v-cb1513f6>7.hash操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hset-key-field-value" class="sidebar-link reco-side-hset-key-field-value" data-v-cb1513f6>HSET key field value</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hgetall-key" class="sidebar-link reco-side-hgetall-key" data-v-cb1513f6>HGETALL key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hget-key-field" class="sidebar-link reco-side-hget-key-field" data-v-cb1513f6>HGET key field</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hmset-key-field-value-field-value" class="sidebar-link reco-side-hmset-key-field-value-field-value" data-v-cb1513f6>HMSET key field value [field value ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hmget-key-field-field" class="sidebar-link reco-side-hmget-key-field-field" data-v-cb1513f6>HMGET key field [field ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hlen-key" class="sidebar-link reco-side-hlen-key" data-v-cb1513f6>HLEN key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hkeys-key" class="sidebar-link reco-side-hkeys-key" data-v-cb1513f6>HKEYS key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hvals-key" class="sidebar-link reco-side-hvals-key" data-v-cb1513f6>HVALS key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hexists-key-field" class="sidebar-link reco-side-hexists-key-field" data-v-cb1513f6>HEXISTS key field</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hdel-key-field-field" class="sidebar-link reco-side-hdel-key-field-field" data-v-cb1513f6>HDEL key field [field ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hincrby-key-field-increment" class="sidebar-link reco-side-hincrby-key-field-increment" data-v-cb1513f6>HINCRBY key field increment</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#hsetnx-key-field-value" class="sidebar-link reco-side-hsetnx-key-field-value" data-v-cb1513f6>HSETNX key field value</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_8-zset操作" class="sidebar-link reco-side-_8-zset操作" data-v-cb1513f6>8.zset操作</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zadd-key-nx-xx-ch-incr-score-member-score-member" class="sidebar-link reco-side-zadd-key-nx-xx-ch-incr-score-member-score-member" data-v-cb1513f6>ZADD key [NX|XX] [CH] [INCR] score member [score member ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zrange-key-start-stop-withscores" class="sidebar-link reco-side-zrange-key-start-stop-withscores" data-v-cb1513f6>ZRANGE key start stop [WITHSCORES]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zcard-key" class="sidebar-link reco-side-zcard-key" data-v-cb1513f6>ZCARD key</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zscore-key-member" class="sidebar-link reco-side-zscore-key-member" data-v-cb1513f6>ZSCORE key member</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zincrby-key-increment-member" class="sidebar-link reco-side-zincrby-key-increment-member" data-v-cb1513f6>ZINCRBY key increment member</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zrangebyscore-key-min-max-withscores-limit-offset-count" class="sidebar-link reco-side-zrangebyscore-key-min-max-withscores-limit-offset-count" data-v-cb1513f6>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zrank-key-member" class="sidebar-link reco-side-zrank-key-member" data-v-cb1513f6>ZRANK key member</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zrem-key-member-member" class="sidebar-link reco-side-zrem-key-member-member" data-v-cb1513f6>ZREM key member [member ...]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zrange-key-start-stop-withscores-2" class="sidebar-link reco-side-zrange-key-start-stop-withscores-2" data-v-cb1513f6>ZRANGE key start stop [WITHSCORES]</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#zrevrank-key-member" class="sidebar-link reco-side-zrevrank-key-member" data-v-cb1513f6>ZREVRANK key member</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_9-geospatial" class="sidebar-link reco-side-_9-geospatial" data-v-cb1513f6>9. Geospatial</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_1添加地理位置" class="sidebar-link reco-side-_1添加地理位置" data-v-cb1513f6>①添加地理位置</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_2查询已添加的地理位置" class="sidebar-link reco-side-_2查询已添加的地理位置" data-v-cb1513f6>②查询已添加的地理位置</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_3删除已添加的地理位置" class="sidebar-link reco-side-_3删除已添加的地理位置" data-v-cb1513f6>③删除已添加的地理位置</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_4获取指定地区的坐标值" class="sidebar-link reco-side-_4获取指定地区的坐标值" data-v-cb1513f6>④获取指定地区的坐标值</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_5计算两地之间的直线距离" class="sidebar-link reco-side-_5计算两地之间的直线距离" data-v-cb1513f6>⑤计算两地之间的直线距离</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_6以给定坐标为中心-在指定半径内查找元素" class="sidebar-link reco-side-_6以给定坐标为中心-在指定半径内查找元素" data-v-cb1513f6>⑥以给定坐标为中心，在指定半径内查找元素</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_7在指定元素周围查找其他元素" class="sidebar-link reco-side-_7在指定元素周围查找其他元素" data-v-cb1513f6>⑦在指定元素周围查找其他元素</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_10-hyperloglogs" class="sidebar-link reco-side-_10-hyperloglogs" data-v-cb1513f6>10. hyperloglogs</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_1基数概念" class="sidebar-link reco-side-_1基数概念" data-v-cb1513f6>①基数概念</a></li><li class="level-3" data-v-cb1513f6><a href="/redis-commandline/#_2hyperloglogs命令" class="sidebar-link reco-side-_2hyperloglogs命令" data-v-cb1513f6>②hyperloglogs命令</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#_11-bitmap位图" class="sidebar-link reco-side-_11-bitmap位图" data-v-cb1513f6>11.bitmap位图</a></li><li class="level-2" data-v-cb1513f6><a href="/redis-commandline/#常用数据类型应用场景" class="sidebar-link reco-side-常用数据类型应用场景" data-v-cb1513f6>常用数据类型应用场景</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.a56c6d1d.js" defer></script><script src="/assets/js/3.16bfab84.js" defer></script><script src="/assets/js/1.92468ed9.js" defer></script><script src="/assets/js/21.71aede5e.js" defer></script>
+  </body>
+</html>
